@@ -14,6 +14,7 @@
 [ext_resource path="res://scripts/crt.gd" type="Script" id=12]
 [ext_resource path="res://scripts/coin.gd" type="Script" id=13]
 [ext_resource path="res://scripts/inv.gd" type="Script" id=14]
+[ext_resource path="res://assets/key.obj" type="ArrayMesh" id=15]
 
 [sub_resource type="ShaderMaterial" id=36]
 shader = ExtResource( 11 )
@@ -145,16 +146,17 @@ material = SubResource( 31 )
 size = Vector3( 1, 2, 1 )
 
 [sub_resource type="BoxShape" id=37]
-extents = Vector3( 1, 1.91709, 1 )
+extents = Vector3( 1, 1.82852, 1.08819 )
 
-[sub_resource type="SpatialMaterial" id=38]
-albedo_color = Color( 0.862745, 0.701961, 0.0784314, 1 )
-metallic = 0.63
-metallic_specular = 0.53
-
-[sub_resource type="CubeMesh" id=39]
-material = SubResource( 38 )
-size = Vector3( 1, 1, 1 )
+[sub_resource type="SpatialMaterial" id=1]
+resource_name = "Material"
+albedo_color = Color( 0.909804, 0.643137, 0.164706, 1 )
+metallic = 0.71
+metallic_specular = 0.81
+roughness = 0.47
+refraction_enabled = true
+refraction_scale = 0.05
+refraction_texture_channel = 0
 
 [node name="Spatial" type="Spatial"]
 
@@ -183,7 +185,7 @@ handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="MeshInstance" type="MeshInstance" parent="crt/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.31243, 7.56339, -11.0339 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6159, 0.471329, -11.0339 )
 mesh = SubResource( 26 )
 skeleton = NodePath("../../..")
 
@@ -290,7 +292,7 @@ transform = Transform( 0.905471, 0, 7.19103, 0, 9.84905, 0, -0.658322, 0, 9.8907
 skeleton = NodePath("../wall")
 
 [node name="OmniLight" type="OmniLight" parent="crt/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.46826, 9.01699, -14.5551 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9054, 2.49205, -12.8317 )
 light_energy = 6.138
 omni_range = 7.717
 
@@ -313,7 +315,9 @@ script = ExtResource( 13 )
 shape = SubResource( 37 )
 
 [node name="MeshInstance" type="MeshInstance" parent="crt/Viewport/key"]
-mesh = SubResource( 39 )
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.0158815, -1.20668, -0.096034 )
+mesh = ExtResource( 15 )
+material/0 = SubResource( 1 )
 
 [node name="inv" type="Node" parent="."]
 unique_name_in_owner = true

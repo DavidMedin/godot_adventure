@@ -18,7 +18,8 @@ var last_collide = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body
+	for x in get_tree().get_nodes_in_group("Keys"):
+		x.connect("body_entered",self,"body_entered",[x])
 
 func _input(e):
 	var change = false
@@ -81,3 +82,9 @@ func _physics_process(delta):
 		last_collide = this
 
 	rotation.y = atan2(dir.x,dir.z)
+
+
+func body_entered(body:Node, key:Node):
+	if body==self:
+		$"%inv".key = true
+		key.queue_free()

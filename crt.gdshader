@@ -22,17 +22,9 @@ void fragment() {
 	float pix_height = screen_height / line_num;
 
     vec3 col = texture(TEXTURE,UV).xyz;
-    //col.x = texture(TEXTURE,UV + vec2((r_offset*2.0)/screen_width,0)).x;
-
-	// Sample the four corners of the 'pixel'
-
-
-	//col = texture(TEXTURE,vec2(start_x,end_y)).xyz;
-	
 
 	float darkness = cos(UV.y*line_num* 2.0*PI)+1.0;
-	int y_offset = int(pix_height)/2;// + r_offset;
-	//float y_offset = (pix_height/2.0)/screen_height;
+	int y_offset = int(pix_height)/2;
 	
     float is_up = sin(UV.x*pix_num*PI);
 
@@ -55,17 +47,13 @@ void fragment() {
 	float b_start_x = ((UV.x * screen_width) - float(int((UV * screen_width+sub_width*2.0).x) % int(sub_width))) / screen_width;
 	float b_end_x = ((UV.x*screen_width) - float(int((UV * screen_width+sub_width*2.0).x) % int(sub_width)) + sub_width) / screen_width;
 
-	//float start_y = ( UV.y - float( int(UV.y * screen_height) % int(sub_height) )/screen_height  ) + y_offset;
-	//float end_y = (UV.y - (float( int(UV.y * screen_height) % int(sub_height) ) + sub_height) / screen_height  ) + y_offset;
-	
 	float start_y = float( int(UV.y*screen_height) + y_offset - (int(UV.y * screen_height) + y_offset) % int(pix_height)) / screen_height;
 	float end_y = float( int(UV.y*screen_height) + y_offset - (int(UV.y * screen_height) + y_offset) % int(pix_height) + int(pix_height) ) / screen_height;
 
 	vec3 new_col = vec3(0);
-	new_col.x = (texture(TEXTURE,vec2(r_start_x,start_y)).x + texture(TEXTURE,vec2(r_end_x,start_y)).x + texture(TEXTURE,vec2(r_start_x,end_y)).x + texture(TEXTURE,vec2(r_end_x,end_y)).x) / 4.0;
-	new_col.y = (texture(TEXTURE,vec2(g_start_x,start_y)).y + texture(TEXTURE,vec2(g_end_x,start_y)).y + texture(TEXTURE,vec2(g_start_x,end_y)).y + texture(TEXTURE,vec2(g_end_x,end_y)).y) / 4.0;
-	new_col.z = (texture(TEXTURE,vec2(b_start_x,start_y)).z + texture(TEXTURE,vec2(b_end_x,start_y)).z + texture(TEXTURE,vec2(b_start_x,end_y)).z + texture(TEXTURE,vec2(b_end_x,end_y)).z) / 4.0;
-	col = vec3(texture(TEXTURE,vec2(r_start_x,start_y)).x,texture(TEXTURE,vec2(g_start_x,start_y)).y,texture(TEXTURE,vec2(b_start_x,start_y)).z);
+	new_col.x = (texture(TEXTURE,vec2(r_start_x,start_y)).x + texture(TEXTURE,vec2(r_end_x,start_y)).x + texture(TEXTURE,vec2(r_start_x,end_y)).x + texture(TEXTURE,vec2(r_end_x,end_y)).x + col.x) / 5.0;
+	new_col.y = (texture(TEXTURE,vec2(g_start_x,start_y)).y + texture(TEXTURE,vec2(g_end_x,start_y)).y + texture(TEXTURE,vec2(g_start_x,end_y)).y + texture(TEXTURE,vec2(g_end_x,end_y)).y + col.y) / 5.0;
+	new_col.z = (texture(TEXTURE,vec2(b_start_x,start_y)).z + texture(TEXTURE,vec2(b_end_x,start_y)).z + texture(TEXTURE,vec2(b_start_x,end_y)).z + texture(TEXTURE,vec2(b_end_x,end_y)).z + col.z) / 5.0;
 	col = new_col;
 	
 	float r_cos = sin(UV.x*pix_num*(2.0*PI) + PI/6.0);
@@ -87,19 +75,8 @@ void fragment() {
     float r_str = (rng * r_cos) * extra;
     float g_str = (rng * g_cos) * extra;
     float b_str = (rng * b_cos) * extra;
-
-	//float brightness = (origin_col.x + origin_col.y + origin_col.z) / 3.0;
-	//float rgb_bright = (r_cos + g_cos + b_cos);
-
     // apply black bands
 	col *= darkness;
-
     col = vec3(col.x*r_str,col.y*g_str,col.z*b_str);
-    //COLOR.xyz = texture(TEXTURE,UV).xyz;
 	COLOR.xyz = col.xyz;
-
-	//COLOR.xyz = texture(TEXTURE,UV).xyz;
-	//if(UV.x > 0.9) {
-	//	COLOR.xyz = vec3(1.0);
-	//}
 }

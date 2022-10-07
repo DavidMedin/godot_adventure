@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://wall_scene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://orange_test.tres" type="Material" id=2]
@@ -9,20 +9,9 @@
 [ext_resource path="res://addons/kenney_prototype_textures/dark/texture_01.png" type="Texture" id=7]
 [ext_resource path="res://addons/kenney_prototype_textures/orange/texture_01.png" type="Texture" id=8]
 [ext_resource path="res://addons/kenney_prototype_textures/green/texture_01.png" type="Texture" id=9]
-[ext_resource path="res://crt.gdshader" type="Shader" id=10]
-[ext_resource path="res://blur.gdshader" type="Shader" id=11]
-[ext_resource path="res://scripts/crt.gd" type="Script" id=12]
 [ext_resource path="res://scripts/coin.gd" type="Script" id=13]
 [ext_resource path="res://scripts/inv.gd" type="Script" id=14]
 [ext_resource path="res://assets/key.obj" type="ArrayMesh" id=15]
-
-[sub_resource type="ShaderMaterial" id=36]
-shader = ExtResource( 11 )
-
-[sub_resource type="ShaderMaterial" id=25]
-shader = ExtResource( 10 )
-shader_param/r_offset = null
-shader_param/extra = null
 
 [sub_resource type="SphereMesh" id=26]
 
@@ -122,30 +111,6 @@ uv1_triplanar_sharpness = 1.41421
 material = SubResource( 23 )
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=27]
-flags_unshaded = true
-albedo_color = Color( 1, 0, 0, 1 )
-
-[sub_resource type="CubeMesh" id=28]
-material = SubResource( 27 )
-size = Vector3( 1, 2, 1 )
-
-[sub_resource type="SpatialMaterial" id=29]
-flags_unshaded = true
-albedo_color = Color( 0, 0, 1, 1 )
-
-[sub_resource type="CubeMesh" id=30]
-material = SubResource( 29 )
-size = Vector3( 1, 2, 1 )
-
-[sub_resource type="SpatialMaterial" id=31]
-flags_unshaded = true
-albedo_color = Color( 0, 1, 0, 1 )
-
-[sub_resource type="CubeMesh" id=32]
-material = SubResource( 31 )
-size = Vector3( 1, 2, 1 )
-
 [sub_resource type="BoxShape" id=37]
 extents = Vector3( 1, 1.82852, 1.08819 )
 
@@ -159,183 +124,114 @@ refraction_enabled = true
 refraction_scale = 0.05
 refraction_texture_channel = 0
 
-[sub_resource type="SphereMesh" id=38]
-
-[sub_resource type="SpatialMaterial" id=39]
-albedo_color = Color( 0.0980392, 0.243137, 0.509804, 1 )
-
-[sub_resource type="SphereMesh" id=40]
-material = SubResource( 39 )
-
 [node name="Spatial" type="Spatial"]
 
-[node name="blur" type="ViewportContainer" parent="."]
-visible = false
-material = SubResource( 36 )
-margin_right = 1024.0
-margin_bottom = 600.0
-stretch = true
-
-[node name="Viewport" type="Viewport" parent="blur"]
-size = Vector2( 1024, 600 )
-handle_input_locally = false
-render_target_update_mode = 0
-
-[node name="crt" type="ViewportContainer" parent="."]
-material = SubResource( 25 )
-margin_right = 1024.0
-margin_bottom = 600.0
-stretch = true
-script = ExtResource( 12 )
-extra = 0.505
-
-[node name="Viewport" type="Viewport" parent="crt"]
-size = Vector2( 256, 150 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="MeshInstance" type="MeshInstance" parent="crt/Viewport"]
+[node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6159, 0.471329, -11.0339 )
 mesh = SubResource( 26 )
-skeleton = NodePath("../../..")
 
-[node name="floor" type="MeshInstance" parent="crt/Viewport"]
+[node name="floor" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85621, -3.0453, 0.251716 )
 mesh = SubResource( 34 )
-skeleton = NodePath("../../..")
 
-[node name="StaticBody" type="StaticBody" parent="crt/Viewport/floor"]
+[node name="StaticBody" type="StaticBody" parent="floor"]
 
-[node name="CollisionShape" type="CollisionShape" parent="crt/Viewport/floor/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="floor/StaticBody"]
 shape = SubResource( 15 )
 
-[node name="wall" parent="crt/Viewport" instance=ExtResource( 1 )]
+[node name="wall" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1.11949, 0, 0, 0, 9.84905, 0, 0, 0, 10.8333, -17.4189, 7.7712, -8.72993 )
-skeleton = NodePath("../../..")
 
-[node name="wall2" parent="crt/Viewport" instance=ExtResource( 1 )]
+[node name="wall2" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1.11949, 0, 0, 0, 9.84905, 0, 0, 0, 10.8333, -3.95404, 7.7712, 31.5391 )
-skeleton = NodePath("../../..")
 
-[node name="dir_indic" type="MeshInstance" parent="crt/Viewport"]
+[node name="dir_indic" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
 visible = false
 mesh = SubResource( 4 )
-skeleton = NodePath("../../..")
 
-[node name="x_indic" type="MeshInstance" parent="crt/Viewport"]
+[node name="x_indic" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.7015, -0.991317, 0.0120244 )
 mesh = SubResource( 6 )
-skeleton = NodePath("../../..")
 
-[node name="y_indic" type="MeshInstance" parent="crt/Viewport"]
+[node name="y_indic" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0134792, -1.51882, 18.3035 )
 mesh = SubResource( 8 )
-skeleton = NodePath("../../..")
 
-[node name="slope" type="MeshInstance" parent="crt/Viewport"]
+[node name="slope" type="MeshInstance" parent="."]
 transform = Transform( 1, 1.95441e-05, -9.17459e-06, -1.79091e-05, 0.513543, -0.858064, -1.20585e-05, 0.858064, 0.513543, 15.332, 2.19629, 14.2184 )
 mesh = SubResource( 12 )
-skeleton = NodePath("../../..")
 material/0 = ExtResource( 2 )
 
-[node name="slope2" type="MeshInstance" parent="crt/Viewport/slope"]
+[node name="slope2" type="MeshInstance" parent="slope"]
 transform = Transform( 1, -1.90994e-11, 1.29525e-11, 0, 0.857994, -0.513662, -4.54747e-13, 0.513662, 0.857994, -4.87111, 17.8164, 4.88837 )
 mesh = SubResource( 13 )
-skeleton = NodePath("../../../..")
+skeleton = NodePath("../..")
 material/0 = ExtResource( 2 )
 
-[node name="StaticBody" type="StaticBody" parent="crt/Viewport/slope/slope2"]
+[node name="StaticBody" type="StaticBody" parent="slope/slope2"]
 
-[node name="CollisionShape" type="CollisionShape" parent="crt/Viewport/slope/slope2/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="slope/slope2/StaticBody"]
 shape = SubResource( 16 )
 
-[node name="StaticBody" type="StaticBody" parent="crt/Viewport/slope"]
+[node name="StaticBody" type="StaticBody" parent="slope"]
 transform = Transform( 1, -1.81899e-12, -9.09495e-13, -9.09495e-13, 1, 0, 1.36424e-12, 0, 1, 0, 0, 0 )
 physics_material_override = SubResource( 20 )
 
-[node name="CollisionShape" type="CollisionShape" parent="crt/Viewport/slope/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="slope/StaticBody"]
 shape = SubResource( 17 )
 
-[node name="character" type="Spatial" parent="crt/Viewport"]
+[node name="character" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.98171, -0.351145, -3.2175 )
 
-[node name="Camera" type="Camera" parent="crt/Viewport/character"]
+[node name="Camera" type="Camera" parent="character"]
 transform = Transform( -1, 6.03911e-08, -6.32112e-08, 0, 0.723052, 0.690794, 8.74228e-08, 0.690794, -0.723052, -9.53674e-07, 15.2612, -14.8937 )
 script = ExtResource( 4 )
 
-[node name="KinematicBody" type="KinematicBody" parent="crt/Viewport/character"]
+[node name="KinematicBody" type="KinematicBody" parent="character"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.110346, 0.588408, -0.892913 )
 script = ExtResource( 3 )
 
-[node name="CollisionShape" type="CollisionShape" parent="crt/Viewport/character/KinematicBody"]
+[node name="CollisionShape" type="CollisionShape" parent="character/KinematicBody"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 14 )
 
-[node name="hero" type="MeshInstance" parent="crt/Viewport/character/KinematicBody"]
+[node name="hero" type="MeshInstance" parent="character/KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0733299, -0.0467124, 0.0196226 )
 mesh = SubResource( 9 )
-skeleton = NodePath("../../../../..")
+skeleton = NodePath("../../..")
 material/0 = SubResource( 10 )
 
-[node name="MeshInstance" type="MeshInstance" parent="crt/Viewport/character/KinematicBody/hero"]
+[node name="MeshInstance" type="MeshInstance" parent="character/KinematicBody/hero"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0194197, 2.47871, 0.428909 )
 mesh = SubResource( 11 )
 
-[node name="dir_indic" type="MeshInstance" parent="crt/Viewport/character/KinematicBody"]
+[node name="dir_indic" type="MeshInstance" parent="character/KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.208 )
 visible = false
 mesh = SubResource( 24 )
 
-[node name="RemoteTransform" type="RemoteTransform" parent="crt/Viewport/character/KinematicBody"]
-remote_path = NodePath("../../OmniLight")
-update_rotation = false
-update_scale = false
-
-[node name="OmniLight" type="OmniLight" parent="crt/Viewport/character"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.110346, 0.588408, -0.892913 )
-light_energy = 6.138
-omni_range = 7.717
-
-[node name="angled_wall" parent="crt/Viewport" instance=ExtResource( 1 )]
+[node name="angled_wall" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.905471, 0, 7.19103, 0, 9.84905, 0, -0.658322, 0, 9.89071, -10.8312, 7.77124, 11.2611 )
 skeleton = NodePath("../wall")
 
-[node name="OmniLight" type="OmniLight" parent="crt/Viewport"]
+[node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9054, 2.49205, -12.8317 )
 light_energy = 6.138
+shadow_enabled = true
 omni_range = 7.717
 
-[node name="r" type="MeshInstance" parent="crt/Viewport"]
-mesh = SubResource( 28 )
-
-[node name="g" type="MeshInstance" parent="crt/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05645, 0, 0 )
-mesh = SubResource( 30 )
-
-[node name="b" type="MeshInstance" parent="crt/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07839, 0, 0 )
-mesh = SubResource( 32 )
-
-[node name="key" type="Area" parent="crt/Viewport" groups=["Keys"]]
+[node name="key" type="Area" parent="." groups=["Keys"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.262429, 9.31584 )
 script = ExtResource( 13 )
 
-[node name="CollisionShape" type="CollisionShape" parent="crt/Viewport/key"]
+[node name="CollisionShape" type="CollisionShape" parent="key"]
 shape = SubResource( 37 )
 
-[node name="MeshInstance" type="MeshInstance" parent="crt/Viewport/key"]
+[node name="MeshInstance" type="MeshInstance" parent="key"]
 transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.0158815, -1.20668, -0.096034 )
 mesh = ExtResource( 15 )
 material/0 = SubResource( 1 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="crt/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42786, 0, -11.5613 )
-mesh = SubResource( 38 )
-
-[node name="MeshInstance3" type="MeshInstance" parent="crt/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.605119, 0, -11.5613 )
-mesh = SubResource( 40 )
 
 [node name="inv" type="Node" parent="."]
 unique_name_in_owner = true

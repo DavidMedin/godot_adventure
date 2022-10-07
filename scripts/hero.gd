@@ -81,7 +81,8 @@ func _physics_process(delta):
 		velocity = this.remainder
 		last_collide = this
 
-	rotation.y = atan2(dir.x,dir.z)
+	if dir != Vector3(0,0,0):
+		rotation.y = atan2(dir.x,dir.z)
 
 
 func body_entered(body:Node, key:Node):

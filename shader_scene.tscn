@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scripts/crt.gd" type="Script" id=1]
+[ext_resource path="res://crt.gdshader" type="Shader" id=2]
+[ext_resource path="res://cave.tscn" type="PackedScene" id=3]
+
+[sub_resource type="ShaderMaterial" id=25]
+shader = ExtResource( 2 )
+shader_param/r_offset = null
+shader_param/extra = 1.0
+
+[sub_resource type="ProceduralSky" id=42]
+
+[sub_resource type="Environment" id=43]
+background_mode = 1
+background_sky = SubResource( 42 )
+background_color = Color( 0.105882, 0.121569, 0.12549, 1 )
+background_energy = 0.61
+ambient_light_color = Color( 0.2, 0.207843, 0.211765, 1 )
+ambient_light_energy = 1.01
+ambient_light_sky_contribution = 0.93
+tonemap_white = 0.57
+glow_enabled = true
+glow_intensity = 0.0
+glow_bloom = 0.3
+
+[node name="crt" type="ViewportContainer"]
+material = SubResource( 25 )
+margin_right = 1024.0
+margin_bottom = 600.0
+stretch = true
+script = ExtResource( 1 )
+extra = 1.677
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 43 )
+
+[node name="root" type="Viewport" parent="."]
+unique_name_in_owner = true
+size = Vector2( 256, 150 )
+handle_input_locally = false
+render_target_update_mode = 3
+shadow_atlas_size = 1024
+
+[node name="Spatial" parent="root" instance=ExtResource( 3 )]

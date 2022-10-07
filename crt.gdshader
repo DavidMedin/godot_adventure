@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 uniform float r_offset;
+uniform float extra;
 
 float rand(vec2 co){
     return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
@@ -19,6 +20,7 @@ void fragment() {
     float pix_num = (screen_width/3.0) * 0.5;
 
     vec3 col = texture(TEXTURE,UV).xyz;
+	vec4 origin_col = texture(TEXTURE,UV);
     col.x = texture(TEXTURE,UV + vec2((r_offset*2.0)/screen_width,0)).x;
 	float PI = 3.1415;
 
@@ -49,9 +51,11 @@ void fragment() {
         b_cos = 0.0;
     }
     float rng = 1.0;//rand(UV.xy);
-    float r_str = rng * r_cos;
-    float g_str = rng * g_cos;
-    float b_str = rng * b_cos;
+	float brightness = (origin_col.x + origin_col.y + origin_col.z) / 3.0;
+	float rgb_bright = r_cos + g_cos + b_cos;
+    float r_str = (rng * r_cos) + brightness * r_cos/brightness;
+    float g_str = (rng * g_cos) + brightness * g_cos/brightness;
+    float b_str = (rng * b_cos) + brightness * b_cos/brightness;
 
 
     // apply black bands
@@ -59,5 +63,7 @@ void fragment() {
 
     col = vec3(col.x*r_str,col.y*g_str,col.z*b_str);
     COLOR.xyz = col;
-    //COLOR = texture(TEXTURE,UV);
+    vec3 color = col;
+	//float brightness = (color.x + color.y + color.z) / 3.0;
+	//COLOR = origin_col;
 }

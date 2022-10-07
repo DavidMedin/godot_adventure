@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://wall_scene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://orange_test.tres" type="Material" id=2]
@@ -22,6 +22,7 @@ shader = ExtResource( 11 )
 [sub_resource type="ShaderMaterial" id=25]
 shader = ExtResource( 10 )
 shader_param/r_offset = null
+shader_param/extra = null
 
 [sub_resource type="SphereMesh" id=26]
 
@@ -158,6 +159,14 @@ refraction_enabled = true
 refraction_scale = 0.05
 refraction_texture_channel = 0
 
+[sub_resource type="SphereMesh" id=38]
+
+[sub_resource type="SpatialMaterial" id=39]
+albedo_color = Color( 0.0980392, 0.243137, 0.509804, 1 )
+
+[sub_resource type="SphereMesh" id=40]
+material = SubResource( 39 )
+
 [node name="Spatial" type="Spatial"]
 
 [node name="blur" type="ViewportContainer" parent="."]
@@ -178,6 +187,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 stretch = true
 script = ExtResource( 12 )
+extra = 0.505
 
 [node name="Viewport" type="Viewport" parent="crt"]
 size = Vector2( 256, 150 )
@@ -318,6 +328,14 @@ shape = SubResource( 37 )
 transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.0158815, -1.20668, -0.096034 )
 mesh = ExtResource( 15 )
 material/0 = SubResource( 1 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="crt/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42786, 0, -11.5613 )
+mesh = SubResource( 38 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="crt/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.605119, 0, -11.5613 )
+mesh = SubResource( 40 )
 
 [node name="inv" type="Node" parent="."]
 unique_name_in_owner = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://wall_scene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/hero.gd" type="Script" id=2]
@@ -83,7 +83,11 @@ uv1_triplanar_sharpness = 1.41421
 material = SubResource( 45 )
 size = Vector3( 1, 2, 2 )
 
+[sub_resource type="SpatialMaterial" id=56]
+params_line_width = 9.9
+
 [sub_resource type="CubeMesh" id=47]
+material = SubResource( 56 )
 size = Vector3( 4, 2, 4 )
 
 [sub_resource type="SpatialMaterial" id=48]
@@ -125,7 +129,7 @@ shape = SubResource( 15 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.98171, -0.351145, -3.2175 )
 
 [node name="Camera" type="Camera" parent="character"]
-transform = Transform( -1, 5.85132e-08, -1.39198e-07, 0, 0.921863, 0.387515, 1.50996e-07, 0.387515, -0.921863, 0.404191, 8.1379, -10.7666 )
+transform = Transform( -1, 5.85132e-08, -1.39198e-07, 0, 0.921863, 0.387515, 1.50996e-07, 0.387515, -0.921863, 0.404191, 9.53802, -10.7666 )
 script = ExtResource( 4 )
 
 [node name="KinematicBody" type="KinematicBody" parent="character"]
@@ -181,6 +185,14 @@ mesh = SubResource( 46 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.42747, 6.72435, 16.911 )
+light_energy = 2.762
+light_indirect_energy = 5.844
+shadow_enabled = true
+shadow_bias = 0.884
+omni_range = 19.747
+
+[node name="OmniLight2" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.42747, 6.72435, -5.81539 )
 light_energy = 2.762
 light_indirect_energy = 5.844
 shadow_enabled = true

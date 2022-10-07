@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id=25]
 shader = ExtResource( 2 )
-shader_param/r_offset = 0.8
+shader_param/r_offset = 0.0
 shader_param/extra = 1.0
 
 [sub_resource type="ProceduralSky" id=42]
@@ -29,6 +29,7 @@ material = SubResource( 25 )
 margin_right = 1024.0
 margin_bottom = 600.0
 script = ExtResource( 1 )
+r_offset = -0.23
 extra = 1.677
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

@@ -13,10 +13,10 @@ void fragment() {
     float screen_width = 1024.0;
     float screen_height = 600.0;
 
-	float height = 150.0;
-    float width = 256.0;
+	float height = 1024.0;
+    float width = 600.0;
 
-	float line_num = screen_height / 6.0;
+	float line_num = screen_height / 4.0;
     float pix_num = (screen_width/6.0) * 1.0;
 	float pix_width = screen_width / pix_num;
 	float pix_height = screen_height / line_num;
@@ -31,7 +31,8 @@ void fragment() {
 	
 
 	float darkness = cos(UV.y*line_num* 2.0*PI)+1.0;
-	float y_offset = 0.5;
+	float y_offset = r_offset;
+	//float y_offset = (pix_height/2.0)/screen_height;
 	
     float is_up = sin(UV.x*pix_num*PI);
 
@@ -48,25 +49,25 @@ void fragment() {
 	float r_start_x = ((UV.x * screen_width) - float(int((UV * screen_width).x) % int(sub_width))) / screen_width;
 	float r_end_x = ((UV.x*screen_width) - float(int((UV * screen_width).x) % int(sub_width)) + sub_width) / screen_width;
 
-	float r_start_y = ((UV.y*screen_height) - float (int((UV * screen_height).y) % int(sub_height)) - y_offset) / screen_height;
-	float r_end_y = ((UV.y * screen_height) - float(int((UV * screen_height).y) % int(sub_height)) + sub_height- y_offset) / screen_height;
+	float start_y = ( (UV.y*screen_height) - float( int(UV.y * screen_height) % int(sub_height+r_offset) )) / screen_height;
+	float end_y = ((UV.y * screen_height) - float( int(UV.y * screen_height) % int(sub_height+r_offset)  ) + 2.5) / screen_height;
 
 	float g_start_x = ((UV.x * screen_width) - float(int((UV * screen_width+sub_width).x) % int(sub_width))) / screen_width;
 	float g_end_x = ((UV.x*screen_width) - float(int((UV * screen_width+sub_width).x) % int(sub_width)) + sub_width) / screen_width;
 
-	float g_start_y = ((UV.y*screen_height) - float(int((UV * screen_height+sub_height).y) % int(sub_height))- y_offset) / screen_height;
-	float g_end_y = ((UV.y * screen_height) - float(int((UV * screen_height+sub_height).y) % int(sub_height)) + sub_height- y_offset) / screen_height;
+	//float g_start_y = ((UV.y*screen_height) - float(int((UV * screen_height+sub_height).y) % int(sub_height)) + y_offset) / screen_height;
+	//float g_end_y = ((UV.y * screen_height) - float(int((UV * screen_height+sub_height).y) % int(sub_height)) + sub_height + y_offset) / screen_height;
 
 	float b_start_x = ((UV.x * screen_width) - float(int((UV * screen_width+sub_width*2.0).x) % int(sub_width))) / screen_width;
 	float b_end_x = ((UV.x*screen_width) - float(int((UV * screen_width+sub_width*2.0).x) % int(sub_width)) + sub_width) / screen_width;
 
-	float b_start_y = ((UV.y*screen_height) - float(int((UV * screen_height+sub_height*2.0).y) % int(sub_height))- y_offset) / screen_height;
-	float b_end_y = ((UV.y * screen_height) - float(int((UV * screen_height+sub_height*2.0).y) % int(sub_height)) + sub_height- y_offset) / screen_height;
+	//float b_start_y = ((UV.y*screen_height) - float(int((UV * screen_height+sub_height*2.0).y) % int(sub_height)) + y_offset) / screen_height;
+	//float b_end_y = ((UV.y * screen_height) - float(int((UV * screen_height+sub_height*2.0).y) % int(sub_height)) + sub_height + y_offset) / screen_height;
 
 	vec3 new_col = vec3(0);
-	new_col.x = (texture(TEXTURE,vec2(r_start_x,r_start_y)).xyz + texture(TEXTURE,vec2(r_end_x,r_start_y)).xyz + texture(TEXTURE,vec2(r_start_x,r_end_y)).xyz + texture(TEXTURE,vec2(r_end_x,r_end_y)).xyz).x / 4.0;
-	new_col.y = (texture(TEXTURE,vec2(g_start_x,g_start_y)).xyz + texture(TEXTURE,vec2(g_end_x,g_start_y)).xyz + texture(TEXTURE,vec2(g_start_x,g_end_y)).xyz + texture(TEXTURE,vec2(g_end_x,g_end_y)).xyz).y / 4.0;
-	new_col.z = (texture(TEXTURE,vec2(b_start_x,b_start_y)).xyz + texture(TEXTURE,vec2(b_end_x,b_start_y)).xyz + texture(TEXTURE,vec2(b_start_x,b_end_y)).xyz + texture(TEXTURE,vec2(b_end_x,b_end_y)).xyz).z / 4.0;
+	new_col.x = (texture(TEXTURE,vec2(r_start_x,start_y)).xyz + texture(TEXTURE,vec2(r_end_x,start_y)).xyz + texture(TEXTURE,vec2(r_start_x,end_y)).xyz + texture(TEXTURE,vec2(r_end_x,end_y)).xyz).x / 4.0;
+	new_col.y = (texture(TEXTURE,vec2(g_start_x,start_y)).xyz + texture(TEXTURE,vec2(g_end_x,start_y)).xyz + texture(TEXTURE,vec2(g_start_x,end_y)).xyz + texture(TEXTURE,vec2(g_end_x,end_y)).xyz).y / 4.0;
+	new_col.z = (texture(TEXTURE,vec2(b_start_x,start_y)).xyz + texture(TEXTURE,vec2(b_end_x,start_y)).xyz + texture(TEXTURE,vec2(b_start_x,end_y)).xyz + texture(TEXTURE,vec2(b_end_x,end_y)).xyz).z / 4.0;
 	col = new_col;
 	
 	float r_cos = sin(UV.x*pix_num*(2.0*PI) + PI/6.0);
@@ -96,7 +97,7 @@ void fragment() {
 	col *= darkness;
 
     col = vec3(col.x*r_str,col.y*g_str,col.z*b_str);
-    //COLOR.xyz = origin_col.xyz;
+    //COLOR.xyz = texture(TEXTURE,UV).xyz;
 	COLOR.xyz = col.xyz;
 
 	//COLOR.xyz = texture(TEXTURE,UV).xyz;

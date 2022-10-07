@@ -125,7 +125,7 @@ shape = SubResource( 15 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.98171, -0.351145, -3.2175 )
 
 [node name="Camera" type="Camera" parent="character"]
-transform = Transform( -1, 5.85132e-08, -1.39197e-07, 0, 0.921863, 0.387515, 1.50996e-07, 0.387515, -0.921863, -1, 11.5646, -7.30747 )
+transform = Transform( -1, 5.85132e-08, -1.39198e-07, 0, 0.921863, 0.387515, 1.50996e-07, 0.387515, -0.921863, 0.404191, 8.1379, -10.7666 )
 script = ExtResource( 4 )
 
 [node name="KinematicBody" type="KinematicBody" parent="character"]

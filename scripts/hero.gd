@@ -48,10 +48,8 @@ func _input(e):
 func _process(delta):
 	pass
 
-
 func _physics_process(delta):
 	velocity.y -= delta * gravity
-
 	# Get normal of last collision (if there was one)
 	var normal = Vector3(0,1,0)
 

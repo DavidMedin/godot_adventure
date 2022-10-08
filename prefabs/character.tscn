@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scripts/hero.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Camera.gd" type="Script" id=2]
+[ext_resource path="res://addons/kenney_prototype_textures/orange/texture_01.png" type="Texture" id=3]
+[ext_resource path="res://scripts/inv.gd" type="Script" id=4]
+[ext_resource path="res://addons/kenney_prototype_textures/dark/texture_01.png" type="Texture" id=5]
+
+[sub_resource type="CapsuleShape" id=14]
+radius = 0.803607
+height = 2.52792
+
+[sub_resource type="CubeMesh" id=9]
+size = Vector3( 1.306, 4.03, 0.918 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_texture = ExtResource( 5 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=22]
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 0.1, 0.1, 0.1 )
+uv1_offset = Vector3( 0.5, -0.5, -0.5 )
+uv1_triplanar = true
+uv1_triplanar_sharpness = 1.41421
+
+[sub_resource type="CubeMesh" id=11]
+material = SubResource( 22 )
+size = Vector3( 1, 1, 1 )
+
+[node name="character" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1, 5.85132e-08, -1.39198e-07, 0, 0.921863, 0.387515, 1.50996e-07, 0.387515, -0.921863, 0.404191, 9.53802, -10.7666 )
+script = ExtResource( 2 )
+
+[node name="hero_body" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.07378, 0 )
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="hero_body"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 14 )
+
+[node name="hero" type="MeshInstance" parent="hero_body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0733299, -0.0467124, 0.0196228 )
+mesh = SubResource( 9 )
+skeleton = NodePath("../../..")
+material/0 = SubResource( 10 )
+
+[node name="MeshInstance" type="MeshInstance" parent="hero_body/hero"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0194197, 2.47871, 0.428909 )
+mesh = SubResource( 11 )
+
+[node name="inv" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 4 )

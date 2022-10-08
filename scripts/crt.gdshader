@@ -1,6 +1,5 @@
 shader_type canvas_item;
 
-uniform float r_offset;
 uniform float extra;
 
 float rand(vec2 co){
@@ -39,21 +38,26 @@ void fragment() {
 	float sub_width = pix_width / 3.0;
 	float sub_height = pix_height;
 	float r_start_x = ((UV.x * screen_width) - float(int((UV * screen_width).x) % int(sub_width))) / screen_width;
-	float r_end_x = ((UV.x*screen_width) - float(int((UV * screen_width).x) % int(sub_width)) + sub_width) / screen_width;
+	float r_end_x = ((UV.x*screen_width) - float(int((UV * screen_width).x) % int(sub_width)) + sub_width/2.0) / screen_width;
 
 	float g_start_x = ((UV.x * screen_width) - float(int((UV * screen_width+sub_width).x) % int(sub_width))) / screen_width;
-	float g_end_x = ((UV.x*screen_width) - float(int((UV * screen_width+sub_width).x) % int(sub_width)) + sub_width) / screen_width;
+	float g_end_x = ((UV.x*screen_width) - float(int((UV * screen_width+sub_width).x) % int(sub_width)) + sub_width/2.0) / screen_width;
 
 	float b_start_x = ((UV.x * screen_width) - float(int((UV * screen_width+sub_width*2.0).x) % int(sub_width))) / screen_width;
-	float b_end_x = ((UV.x*screen_width) - float(int((UV * screen_width+sub_width*2.0).x) % int(sub_width)) + sub_width) / screen_width;
+	float b_end_x = ((UV.x*screen_width) - float(int((UV * screen_width+sub_width*2.0).x) % int(sub_width)) + sub_width/2.0) / screen_width;
 
 	float start_y = float( int(UV.y*screen_height) + y_offset - (int(UV.y * screen_height) + y_offset) % int(pix_height)) / screen_height;
-	float end_y = float( int(UV.y*screen_height) + y_offset - (int(UV.y * screen_height) + y_offset) % int(pix_height) + int(pix_height) ) / screen_height;
+	float end_y = float( int(UV.y*screen_height) + y_offset - (int(UV.y * screen_height) + y_offset) % int(pix_height) + int(pix_height)/2 ) / screen_height;
 
 	vec3 new_col = vec3(0);
 	new_col.x = (texture(TEXTURE,vec2(r_start_x,start_y)).x + texture(TEXTURE,vec2(r_end_x,start_y)).x + texture(TEXTURE,vec2(r_start_x,end_y)).x + texture(TEXTURE,vec2(r_end_x,end_y)).x + col.x) / 5.0;
 	new_col.y = (texture(TEXTURE,vec2(g_start_x,start_y)).y + texture(TEXTURE,vec2(g_end_x,start_y)).y + texture(TEXTURE,vec2(g_start_x,end_y)).y + texture(TEXTURE,vec2(g_end_x,end_y)).y + col.y) / 5.0;
 	new_col.z = (texture(TEXTURE,vec2(b_start_x,start_y)).z + texture(TEXTURE,vec2(b_end_x,start_y)).z + texture(TEXTURE,vec2(b_start_x,end_y)).z + texture(TEXTURE,vec2(b_end_x,end_y)).z + col.z) / 5.0;
+	
+	//new_col.x = (texture(TEXTURE,vec2(r_end_x,end_y)).x + col.x) / 2.0;
+	//new_col.y = (texture(TEXTURE,vec2(g_end_x,end_y)).y + col.y) / 2.0;
+	//new_col.z = (texture(TEXTURE,vec2(b_end_x,end_y)).z + col.z) / 2.0;
+	
 	col = new_col;
 	
 	float r_cos = sin(UV.x*pix_num*(2.0*PI) + PI/6.0);

@@ -1,0 +1,238 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://prefabs/character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/kenney_prototype_textures/dark/texture_01.png" type="Texture" id=2]
+[ext_resource path="res://prefabs/key.tscn" type="PackedScene" id=3]
+[ext_resource path="res://prefabs/doors.tscn" type="PackedScene" id=4]
+
+[sub_resource type="SpatialMaterial" id=48]
+albedo_color = Color( 0.301961, 0.211765, 0.0588235, 1 )
+metallic_specular = 0.0
+
+[sub_resource type="CubeMesh" id=49]
+material = SubResource( 48 )
+size = Vector3( 1, 4, 1 )
+
+[sub_resource type="SpatialMaterial" id=43]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 0.1, 0.1, 0.1 )
+uv1_offset = Vector3( 0.5, -0.5, -0.5 )
+uv1_triplanar = true
+uv1_triplanar_sharpness = 1.41421
+
+[sub_resource type="CubeMesh" id=44]
+material = SubResource( 43 )
+size = Vector3( 40, 2, 80 )
+
+[sub_resource type="BoxShape" id=45]
+extents = Vector3( 20.0393, 1, 19.9683 )
+
+[sub_resource type="CubeMesh" id=46]
+material = SubResource( 43 )
+size = Vector3( 10, 2, 20.023 )
+
+[sub_resource type="BoxShape" id=47]
+extents = Vector3( 5.02508, 1, 10.0246 )
+
+[sub_resource type="CubeMesh" id=50]
+material = SubResource( 43 )
+size = Vector3( 25, 2, 10 )
+
+[sub_resource type="BoxShape" id=51]
+extents = Vector3( 12.3982, 1, 4.97671 )
+
+[sub_resource type="CubeMesh" id=52]
+material = SubResource( 43 )
+size = Vector3( 3, 5, 10 )
+
+[sub_resource type="BoxShape" id=53]
+extents = Vector3( 1.63175, 2.41391, 5.07029 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="character" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 26.3922 )
+
+[node name="torch" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.780168, 0.62557, 0, -0.62557, 0.780168, 13.2329, 8.05699, 52.5069 )
+mesh = SubResource( 49 )
+
+[node name="OmniLight" type="OmniLight" parent="torch"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16664, -0.0882111 )
+light_color = Color( 0.803922, 0.556863, 0.266667, 1 )
+light_energy = 12.31
+omni_range = 14.897
+omni_attenuation = 0.965939
+
+[node name="torch2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.780168, 0.62557, 0, -0.62557, 0.780168, -8.69544, 8.05699, 52.0056 )
+mesh = SubResource( 49 )
+
+[node name="OmniLight2" type="OmniLight" parent="torch2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.33328, -0.176426 )
+light_color = Color( 0.803922, 0.556863, 0.266667, 1 )
+light_energy = 12.31
+omni_range = 14.897
+omni_attenuation = 0.965939
+
+[node name="floor" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2.00949, 1.85621, -1.5017, 61.7848 )
+mesh = SubResource( 44 )
+skeleton = NodePath("../character")
+
+[node name="StaticBody" type="StaticBody" parent="floor"]
+
+[node name="CollisionShape" type="CollisionShape" parent="floor/StaticBody"]
+shape = SubResource( 45 )
+
+[node name="door-wall" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 2.00949, 0, -1, -8.78376e-08, -14.0348, 17.8723, 55.6582 )
+mesh = SubResource( 46 )
+skeleton = NodePath("../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall/StaticBody"]
+shape = SubResource( 47 )
+
+[node name="door-wall2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 2.00949, 0, -1, -8.78376e-08, 17.4023, 17.8723, 55.6582 )
+mesh = SubResource( 46 )
+skeleton = NodePath("../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall2/StaticBody"]
+shape = SubResource( 47 )
+
+[node name="door-wall3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 2.00949, 0, -1, -8.78376e-08, 2.65355, 27.888, 53.857 )
+mesh = SubResource( 50 )
+skeleton = NodePath("../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall3"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall3/StaticBody"]
+shape = SubResource( 51 )
+
+[node name="door-wall4" type="MeshInstance" parent="door-wall3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8223, -1.41771, -9.25337 )
+mesh = SubResource( 52 )
+skeleton = NodePath("../../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall3/door-wall4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall3/door-wall4/StaticBody"]
+shape = SubResource( 53 )
+
+[node name="door-wall5" type="MeshInstance" parent="door-wall3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.404, -1.41771, -9.25337 )
+mesh = SubResource( 52 )
+skeleton = NodePath("../../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall3/door-wall5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall3/door-wall5/StaticBody"]
+shape = SubResource( 53 )
+
+[node name="key" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38938, 4.27339, 33.2606 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.0343588, 0.99941, 0, -0.99941, -0.0343588, 0.705697, 11.1048, 32.7927 )
+light_color = Color( 0.223529, 0.266667, 0.913725, 1 )
+light_energy = 15.2
+light_indirect_energy = 4.2
+shadow_enabled = true
+spot_range = 17.2995
+spot_angle = 33.29
+
+[node name="SpotLight2" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.0343588, 0.99941, 0, -0.99941, -0.0343588, 0.616792, 11.1048, 79.2118 )
+light_color = Color( 0.223529, 0.913725, 0.282353, 1 )
+light_energy = 15.2
+light_indirect_energy = 4.2
+shadow_enabled = true
+spot_range = 17.2995
+spot_angle = 33.29
+
+[node name="doors" parent="." instance=ExtResource( 4 )]
+
+[node name="torch3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.780168, 0.62557, 0, -0.62557, 0.780168, 13.2329, 8.05699, 98.4735 )
+mesh = SubResource( 49 )
+
+[node name="OmniLight" type="OmniLight" parent="torch3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16664, -0.0882111 )
+light_color = Color( 0.803922, 0.556863, 0.266667, 1 )
+light_energy = 12.31
+omni_range = 14.897
+omni_attenuation = 0.965939
+
+[node name="torch4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.780168, 0.62557, 0, -0.62557, 0.780168, -8.69544, 8.05699, 97.9722 )
+mesh = SubResource( 49 )
+
+[node name="OmniLight2" type="OmniLight" parent="torch4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.33328, -0.176426 )
+light_color = Color( 0.803922, 0.556863, 0.266667, 1 )
+light_energy = 12.31
+omni_range = 14.897
+omni_attenuation = 0.965939
+
+[node name="door-wall4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 2.00949, 0, -1, -8.78376e-08, -14.0348, 17.8723, 101.625 )
+mesh = SubResource( 46 )
+skeleton = NodePath("../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall4/StaticBody"]
+shape = SubResource( 47 )
+
+[node name="door-wall5" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 2.00949, 0, -1, -8.78376e-08, 17.4023, 17.8723, 101.625 )
+mesh = SubResource( 46 )
+skeleton = NodePath("../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall5/StaticBody"]
+shape = SubResource( 47 )
+
+[node name="door-wall6" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 2.00949, 0, -1, -8.78376e-08, 2.65355, 27.888, 99.8236 )
+mesh = SubResource( 50 )
+skeleton = NodePath("../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall6"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall6/StaticBody"]
+shape = SubResource( 51 )
+
+[node name="door-wall4" type="MeshInstance" parent="door-wall6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8223, -1.41771, -9.25337 )
+mesh = SubResource( 52 )
+skeleton = NodePath("../../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall6/door-wall4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall6/door-wall4/StaticBody"]
+shape = SubResource( 53 )
+
+[node name="door-wall5" type="MeshInstance" parent="door-wall6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.404, -1.41771, -9.25337 )
+mesh = SubResource( 52 )
+skeleton = NodePath("../../character")
+
+[node name="StaticBody" type="StaticBody" parent="door-wall6/door-wall5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="door-wall6/door-wall5/StaticBody"]
+shape = SubResource( 53 )
+
+[node name="doors2" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.240904, 101.8 )
+
+[node name="key2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.209358, 4.02933, 79.3361 )
